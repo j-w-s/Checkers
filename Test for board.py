@@ -1,18 +1,22 @@
 from tkinter import *
+
 #make board in tkinter
 
 ###Board Class###
-class Board(Frame):
+class Board(Canvas):
     def __init__(self,container):
-        Frame.__init__(self,container)
+        Canvas.__init__(self,container)
         self.setupGUI()
 
+
     def setupGUI(self):
-        #creates a loop for rows
+        
+        #Name in top left corner
         self.Name = Label(self, text = ("Lets play Chess!"), height =5, width = 20, font = ("Arial",10), background = "white")
         self.Name.grid(row=0,column=0)
         
-        for rows in range(1,8):
+        #creates a loop for rows
+        for rows in range(1,9):
             #create row names
             self.rowname = Label(self,text=(rows), height = 5, width =5, background = "gray93")
             self.rowname.grid(row=rows,column=0, sticky = E)
@@ -34,15 +38,16 @@ class Board(Frame):
                 #if the column is 1,3,5,7 and row is 0,2,4,6,8
                 #make the box brow
                 if (col + offset)%2 == 0:
-                    self.box1 = Label(self,text="", height = 5, width = 10, background = "beige")
+                    self.box1 = Canvas(self, height = 90, width = 90, background = "Light yellow")
                     self.box1.grid(row=rows,column=col)
                 else:
-                    self.box1 = Label(self,text="", height = 5, width = 10, background = "brown")
+                    self.box1 = Canvas(self, height = 90, width = 90, background = "brown")
                     self.box1.grid(row=rows,column=col)
                 
 
+        self.pack(fill = BOTH, expand = 1)
+        
 
-        self.pack()
 
 ###Main Code###
 window = Tk()
