@@ -50,15 +50,15 @@ class Board(Frame):
         self.player2.grid(row = 10, columnspan = 9)
 
         # create a loop for rows
-        for rows in range(2,9):
+        for rows in range(1,9):
             # inner loop for columns
             for col in range(1,9):
                 # variable to make checkboard look
-                offset = 0
+                offset = 1
 
                 # even rows 0-8
                 if rows%2 == 0:
-                    offset = 1
+                    offset = 0
 
                 # if the column is 1,3,5,7 and row is 0,2,4,6,8
                 #m ake the box brown
