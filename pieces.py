@@ -15,60 +15,60 @@ class Piece:
 
 class Knight(Piece):
     # class variables
-    blackKnight = "CHESS PIECES\Chess_ndt60.png"
-    whiteKnight = "CHESS PIECES\Chess_nlt60.png"
-    # class variables
-    def __init__(self):
+    # list containing black, white pieces of piece type
+    knightImage = ["CHESS PIECES\Chess_ndt60.png",\
+                 "CHESS PIECES\Chess_nlt60.png"]
+    # constructor
+    def __init__(self, number):
         # inherits from the Piece superclass
-        Pieces.__init__(self)
+        Piece.__init__(self, knightImage[number])
 
 class Rook(Piece):
     # class variables
-    blackRook = "CHESS PIECES\Chess_rdt60.png"
-    whiteRook = "CHESS PIECES\Chess_rlt60.png"
-    rookColor = ["CHESS PIECES\Chess_rdt60.png", "CHESS PIECES\Chess_rlt60.png"] # such that black, white pieces
-    # could call i=1 or i=2 in p1 = Piece(1) or p2 = Piece(2) and
-    # use:
-    # def __init__(self, i):
-    # Pieces.__init__(self, rookColor[i]
-    # for EVERY piece type
-    # class variables
-    def __init__(self):
+    # list containing black, white pieces of piece type
+    rookImage = ["CHESS PIECES\Chess_rdt60.png",\
+                 "CHESS PIECES\Chess_rlt60.png"]
+    #constructor
+    def __init__(self, number):
         # inherits from the Piece superclass
-        Pieces.__init__(self)
+        Piece.__init__(self, rookImage[number])
 
 class Bishop(Piece):
     # class variables
-    blackBishop = "CHESS PIECES\Chess_bdt60.png"
-    whiteBishop = "CHESS PIECES\Chess_blt60.png"
-    # class variables
-    def __init__(self):
+    # list containing black, white pieces of piece type
+    bishopImage = ["CHESS PIECES\Chess_bdt60.png",\
+                   "CHESS PIECES\Chess_blt60.png"]
+    # constructor
+    def __init__(self, number):
         # inherits from the Piece superclass
-        Pieces.__init__(self)
+        Piece.__init__(self, bishopImage[number])
 
 class Queen(Piece):
     # class variables
-    blackQueen = "CHESS PIECES\Chess_qdt60.png"
-    whiteQueen = "CHESS PIECES\Chess_qlt60.png"
-    # class variables
-    def __init__(self):
+    # list containing black, white pieces of piece type
+    queenImage = ["CHESS PIECES\Chess_qdt60.png",\
+                   "CHESS PIECES\Chess_qlt60.png"]
+    # constructor
+    def __init__(self, number):
         # inherits from the Piece superclass
-        Pieces.__init__(self)
+        Piece.__init__(self, queenImage[number])
 
 class King(Piece):
     # class variables
-    blackKing = "CHESS PIECES\Chess_kdt60.png"
-    whiteKing = "CHESS PIECES\Chess_klt60.png"
-    # class variables
-    def __init__(self):
+    # list containing black, white pieces of piece type
+    kingImage = ["CHESS PIECES\Chess_kdt60.png",\
+                 "CHESS PIECES\Chess_klt60.png"]
+    # constructor
+    def __init__(self, number):
         # inherits from the Piece superclass
-        Pieces.__init__(self)
+        Piece.__init__(self, kingImage[number])
         
 class Pawn(Piece):
     # class variables
-    blackPawn = "CHESS PIECES\Chess_pdt60.png"
-    whitePawn = "CHESS PIECES\Chess_plt60.png"
-    # class variables
-    def __init__(self):
+    # list containing black, white pieces of piece type
+    pawnImage = ["CHESS PIECES\Chess_pdt60.png",\
+                 "CHESS PIECES\Chess_plt60.png"]
+    # constructor
+    def __init__(self, number):
         # inherits from the Piece superclass
-        Pieces.__init__(self)
+        Piece.__init__(self, pawnImage[number])
