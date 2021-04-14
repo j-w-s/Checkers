@@ -2,7 +2,7 @@
 # IMPORTS
 ##################################
 
-# import Pieces, Board, Movement
+import Piece, Board # Movement, Player
 from tkinter import *
 
 ##################################
@@ -22,3 +22,7 @@ b1 = Board(window)
 
 # render the GUI in the mainloop
 window.mainloop()
+
+# create players 1 and 2
+p1 = Player(1)
+p2 = Player(2)
