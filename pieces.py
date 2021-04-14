@@ -1,3 +1,5 @@
+import Player
+
 class Piece:
     # constructor
     def __init__(self, image):
