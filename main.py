@@ -2,7 +2,7 @@
 # IMPORTS
 ##################################
 
-import Piece, Board # Movement, Player
+import #pieces, board, movement, player
 from tkinter import *
 
 ##################################
