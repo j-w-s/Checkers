@@ -15,7 +15,7 @@ from tkinter import *
 # create the window
 window = Tk()
 #window.geometry("{}x{}".format(WIDTH, HEIGHT))
-window.title("CHESS")
+window.title("CHECKERS")
 
 # create an instance of board
 b1 = Board(window)
@@ -24,5 +24,5 @@ b1 = Board(window)
 window.mainloop()
 
 # create players 1 and 2
-p1 = Player(1)
-p2 = Player(2)
+p1 = Player(0)
+p2 = Player(1)
