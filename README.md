@@ -23,7 +23,7 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About Project</a>
+      <a href="#about-project">About Project</a>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
@@ -32,9 +32,8 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
     <li><a href="#features">Features</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contributors">Contributors</a></li>
   </ol>
 </details>
 
@@ -63,8 +62,13 @@ We need to discuss how we utilized the materials (soldering, laser cutting, and 
    ```sh
    py -m pip install tkinter
    ```
-2. 
-3. 
+2. Some step
+3. Some step
+
+<!-- FEATURES -->
+## Features
+
+Some features
 
 <!-- CONTRIBUTORS-->
 ## Contributors
