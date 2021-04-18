@@ -51,14 +51,14 @@ We need to add information about the project: how we built the enclosure, how we
 
 We need to list the materials that we bought.
 
-Download and install Python:
+Download and install the latest version of Python:
   ```sh
 https://www.python.org/ftp/python/3.9.4/python-3.9.4-amd64.exe
   ```
 ### Installation
 
 We need to discuss how we utilized the materials (soldering, laser cutting, and more), etc.
-1. Install tkinter:
+1. Load the command prompt and install tkinter via the following command:
    ```sh
    py -m pip install tkinter
    ```
