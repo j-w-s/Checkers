@@ -39,7 +39,7 @@
 </details>
 
 <!-- ABOUT PROJECT -->
-## ABOUT PROJECT
+## About Project
 
 We need to add more information about the project: descriptions of the project, screenshots, etc.
 
