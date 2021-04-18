@@ -1,5 +1,12 @@
+###########################
+# IMPORTS
+###########################
+
 from tkinter import *
 
+##################################
+# CLASS
+##################################
 class Piece:
     # constructor
     def __init__(self, image):
@@ -16,11 +23,11 @@ class Piece:
         self._image = image
 
 
-class Knight(Piece):
+class Single(Piece):
     # class variables
     # list containing black, white pieces of piece type
-    knightImage = [PhotoImage(file="CHESS-PIECES\Chess_ndt60.png"), \
-                   PhotoImage(file="CHESS-PIECES\Chess_nlt60.png")]
+    knightImage = [PhotoImage(file="checkers-img\black_checker.png"), \
+                   PhotoImage(file="checkers-img\red_checker.png")]
 
     # constructor
     def __init__(self, number):
@@ -28,61 +35,13 @@ class Knight(Piece):
         Piece.__init__(self, knightImage[number])
 
 
-class Rook(Piece):
+class Double(Piece):
     # class variables
     # list containing black, white pieces of piece type
-    rookImage = [PhotoImage(file="CHESS-PIECES\Chess_rdt60.png"), \
-                 PhotoImage(file="CHESS-PIECES\Chess_rlt60.png")]
+    rookImage = [PhotoImage(file="checkers-img\black_checker_double.png"), \
+                 PhotoImage(file="checkers-img\red_checker_double.png")]
 
     # constructor
     def __init__(self, number):
         # inherits from the Piece superclass
         Piece.__init__(self, rookImage[number])
-
-
-class Bishop(Piece):
-    # class variables
-    # list containing black, white pieces of piece type
-    bishopImage = [PhotoImage(file="CHESS-PIECES\Chess_bdt60.png"), \
-                   PhotoImage(file="CHESS-PIECES\Chess_blt60.png")]
-
-    # constructor
-    def __init__(self, number):
-        # inherits from the Piece superclass
-        Piece.__init__(self, bishopImage[number])
-
-
-class Queen(Piece):
-    # class variables
-    # list containing black, white pieces of piece type
-    queenImage = [PhotoImage(file="CHESS-PIECES\Chess_qdt60.png"), \
-                  PhotoImage(file="CHESS-PIECES\Chess_qlt60.png")]
-
-    # constructor
-    def __init__(self, number):
-        # inherits from the Piece superclass
-        Piece.__init__(self, queenImage[number])
-
-
-class King(Piece):
-    # class variables
-    # list containing black, white pieces of piece type
-    kingImage = [PhotoImage(file="CHESS-PIECES\Chess_kdt60.png"), \
-                 PhotoImage(file="CHESS-PIECES\Chess_klt60.png")]
-
-    # constructor
-    def __init__(self, number):
-        # inherits from the Piece superclass
-        Piece.__init__(self, kingImage[number])
-
-
-class Pawn(Piece):
-    # class variables
-    # list containing black, white pieces of piece type
-    pawnImage = [PhotoImage(file="CHESS-PIECES\Chess_pdt60.png"), \
-                 PhotoImage(file="CHESS-PIECES\Chess_plt60.png")]
-
-    # constructor
-    def __init__(self, number):
-        # inherits from the Piece superclass
-        Piece.__init__(self, pawnImage[number])
