@@ -1,6 +1,6 @@
 <!--
 *** README created with help from: https://github.com/othneildrew/Best-README-Template#roadmap
-*** I do NOT know HTML.
+*** I do NOT know HTML well enough to have done this without it!
 -->
 
 
@@ -36,6 +36,7 @@
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
+        <li><a href="#building">Building</a></li>
       </ul>
     </li>
     <li><a href="#features">Features</a></li>
@@ -46,35 +47,74 @@
 <!-- ABOUT PROJECT -->
 ## About Project
 
-We need to add more information about the project: descriptions of the project, screenshots, etc.
+This project ecnompasses the implementation of the game Checkers using the Python scripting language, the module tkinter, and GPIO input from a breadboard to the Raspberry Pi 3b.
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-We need to add information about the project: how we built the enclosure, how we soldered the wires for the breadboard, etc.
+This section contains information regarding the creation and use of this project: how we built the enclosure, how we soldered the wires for compatability with the breadboard, the total expenditure of resources for the materials of the project, the installation of this software, and more.
 
 ### Prerequisites
 
-We need to list the materials that we bought.
+[Hardware necessary for the project]
+1. A square board with dimensions 0.20"x23.88"x23.88"
+2. A Raspberry Pi 3b or other compatible device
+3. A screen capable of displaying output from the Raspberry Pi or other compatible device
+4. A soldering kit
+5. A screwdriver kit
+6. Access to a laser cutter that can read .dfx files
+7. Small latches with dimensions [dimensions]
+8. Buttons and a joystick from Amazon or competing retailer
 
-Download and install the latest version of Python:
+[Software necessary for the project]
+1. The latest version of Python, which can be downloaded below:
   ```sh
-https://www.python.org/ftp/python/3.9.4/python-3.9.4-amd64.exe
+  https://www.python.org/ftp/python/3.9.4/python-3.9.4-amd64.exe
   ```
+2. The following .dfx file:
+   ```sh
+   link to download of .dfx file
+   ```
+   
+[Total cost for project]
+EMBED A PICTURE WITH THE RECEIPTS AND TOTAL COST HERE!
+
 ### Installation
 
 We need to discuss how we utilized the materials (soldering, laser cutting, and more), etc.
-1. Load the command prompt and install tkinter via the following command:
+1. Run the previously downloaded executable file for Python 3.X and install Python
+2. Load the command prompt and install tkinter via the following command:
    ```sh
    py -m pip install tkinter
    ```
-2. Some step
-3. Some step
+3. From the github project, download (FILE WITH EVERYTHING THAT HAS NOT YET BEEN UPLOADED)
+4. Unzip the downloaded folder to a preferred location
+5. Load IDLE and open the .py file with name "main" stored inside the folder saved at the preferred location mentioned in step 4
+6. Select run
+
+### Building
+
+1. Load the .dfx file to a machine that can laser-cut the design for the enclosure of the Raspberry Pi 3b
+2. Assemble cut pieces of the enclosure
+3. Other step for building
+4. Other step for building
+5. Other step for building
 
 <!-- FEATURES -->
 ## Features
 
-Some features
+The main program included in this project implements the game Checkers.
+Players of the game may utilize a single joystick and pair of buttons to move pieces around the board and approve or decline their movements.
+This version of the game follows the standard rules of the game, such that:
+1. A player may move single pieces diagonally only one space unless he or she is taking his or her opponent's piece(s), in which case a player may skip several places in one turn.
+2. Other rule
+3. Other rule
+4. Other rule
+
+Other information about the rules of the game can be found below:
+   ```sh
+   https://winning-moves.com/images/kingmerulesv2.pdf
+   ```
 
 <!-- CONTRIBUTORS-->
 ## Contributors
