@@ -66,6 +66,20 @@ class Board(Frame):
                         self.box.image = self.rsimg
                         self.box.create_image(50, 50, anchor=CENTER, image=self.rsimg)
                         self.box.grid(row=rows, column=col)
+                    elif (self.checkersBoard[rows][col] == "BK"):
+                        #make a canvas(brown bg), place a black checker KING img in the canvas if it corresponds with the 2d list
+                        self.bkimg = PhotoImage(file="checkers-img/black_checker_double.png")
+                        self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#451d1d")
+                        self.box.image = self.bkimg
+                        self.box.create_image(50, 50, anchor=CENTER, image=self.bkimg)
+                        self.box.grid(row=rows, column=col)
+                    elif (self.checkersBoard[rows][col] == "RK"):
+                        #make a canvas(brown bg), place a red checker KING img in the canvas if it corresponds with the 2d list
+                        self.rkimg = PhotoImage(file="checkers-img/red_checker_double.png")
+                        self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#451d1d")
+                        self.box.image = self.rkimg
+                        self.box.create_image(50, 50, anchor=CENTER, image=self.rkimg)
+                        self.box.grid(row=rows, column=col)
                     else:
                         # make a canvas(brown bg), these are empty squares
                         self.box = Canvas(self, height=100, width=100,highlightthickness=0, background="#451d1d")
@@ -75,43 +89,37 @@ class Board(Frame):
                 else:
                     if (self.checkersBoard[rows][col] == "BS"):
                         # make a canvas(tan bg), place a black checker img in the canvas if it corresponds with the 2d list
-                        img = PhotoImage(file="checkers-img/black_checker.png")
-                        self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="black")
+                        self.bsimg = PhotoImage(file="checkers-img/black_checker.png")
+                        self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#a47c48")
+                        self.box.image = self.bsimg
+                        self.box.create_image(50, 50, anchor=CENTER, image=self.bsimg)
                         self.box.grid(row=rows, column=col)
-                    elif (self.checkersBoard[rows][col] == "WS"):
+                    elif (self.checkersBoard[rows][col] == "RS"):
                         # make a canvas(tan bg), place a red checker img in the canvas if it corresponds with the 2d list
-                        img = PhotoImage(file="checkers-img/red_checker.png")
-                        self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="red")
+                        self.rsimg = PhotoImage(file="checkers-img/red_checker.png")
+                        self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#a47c48")
+                        self.box.image = self.rsimg
+                        self.box.create_image(50, 50, anchor=CENTER, image=self.rsimg)
+                        self.box.grid(row=rows, column=col)
+                    elif (self.checkersBoard[rows][col] == "BK"):
+                        #make a canvas(tan bg), place a black checker KING img in the canvas if it corresponds with the 2d list
+                        self.bkimg = PhotoImage(file="checkers-img/black_checker_double.png")
+                        self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#a47c48")
+                        self.box.image = self.bkimg
+                        self.box.create_image(50, 50, anchor=CENTER, image=self.bkimg)
+                        self.box.grid(row=rows, column=col)
+                    elif (self.checkersBoard[rows][col] == "RK"):
+                        #make a canvas(tan bg), place a red checker KING img in the canvas if it corresponds with the 2d list
+                        self.rkimg = PhotoImage(file="checkers-img/red_checker_double.png")
+                        self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#a47c48")
+                        self.box.image = self.rkimg
+                        self.box.create_image(50, 50, anchor=CENTER, image=self.rkimg)
                         self.box.grid(row=rows, column=col)
                     else:
                         # make a canvas(tan bg), these are empty squares
                         self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#a47c48")
                         self.box.grid(row=rows, column=col)
         self.pack()
-
-
-    def setupPieces(self):
-        # create a loop for rows
-        for row in range(len(self.checkersBoard)):
-            # inner loop for columns
-            for col in range(len(self.checkersBoard[row])):
-
-                #set piece images based on checkerboard 2d list
-                if (self.checkersBoard[row][col] == "BS"):
-                    img = PhotoImage(file="checkers-img/black_checker.png")
-                    self.box = Label(self, text="", height=50, width=50, background="#451d1d",image=img)
-                    self.box.grid(row=row,column=col)
-                elif (self.checkersBoard[row][col] == "WS"):
-                    img = PhotoImage(file="checkers-img/red_checker.png")
-                    self.box = Label(self, text="", height=50, width=50, background="#451d1d",image=img)
-                    self.box.grid(row=row, column=col)
-                else:
-                    img = PhotoImage(file="checkers-img/unoccupied_square.png")
-                    self.box = Label(self, text="", height=50, width=50, background="#451d1d", image=img)
-                    self.box.grid(row=row, column=col)
-
-        self.pack()
-        # self.pack()
 
     # updates board after every move
     def calculateNextMove(chessBoard):
