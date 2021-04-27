@@ -1,23 +1,24 @@
 ##################################
-# IMPORTS
+# IMPORTS AND MISC. VARIABLES
 ##################################
 
-# import pieces, board, movement, player
+# imports
 from tkinter import *
+import copy
 
-#create tkinter object/window
-#has to be created before the image objects below can be created in the Board class
+# create tkinter object/window
 window = Tk()
 
 ##################################
 # IMPORTS
 ##################################
 class Board(Frame):
+    # class variables
+    # images for black and red singles and doubles
     bsimg = PhotoImage(file="checkers-img/black_checker.png")
     rsimg = PhotoImage(file="checkers-img/red_checker.png")
     bkimg = PhotoImage(file="checkers-img/black_checker_double.png")
     rkimg = PhotoImage(file="checkers-img/red_checker_double.png")
-    # class variables
     # 8x8 list initializing the board and initial location of pieces on
     # the board
     # the preceding letters B and R represent the colors black and red for
@@ -39,74 +40,76 @@ class Board(Frame):
     # constructor
     def __init__(self, container):
         Frame.__init__(self, container)
-        #instance variables
+        # instance variables
         self.row = 0
         self.column = 0
         self.selected = (None, None)
-
-        #functions to be ran at the beginnning of instantiation
+        # functions to be run at the beginnning of instantiation
         self.setupBoard()
         self.pack()
         self.selectPiece()
 
-    #getter for row instance variable
-    @property
+    # accessor for row
+    @property # says that an accessor/a getter follows
     def row(self):
         return self._row
 
-    #setter for row instance variable
-    @row.setter
+    # mutator for row instance variable
+    @row.setter # says that a mutator/setter follows
     def row(self, value):
-        if (value<=7 and value>=0):
+        if (value<=7 and value>=0): # range checking
             self._row = value
 
-    #getter for column instance variable
-    @property
+    # accessor for column
+    @property # says that an accessor/a getter follows
     def column(self):
         return self._column
 
-    #setter for column instance variable
-    @column.setter
+    # mutator for column
+    @column.setter # says that a mutator/setter follows
     def column(self, value):
-        if(value<=7 and value>=0):
+        if(value<=7 and value>=0):# range checking
             self._column = value
-
+            
+    # class method for creating visual display of checkers board
     def setupBoard(self):
+        # loop for rows of checkers board
         for rows in range(len(self.checkersBoard)):
-            # inner loop for columns
+            # inner loop for columns of checkers board
             for col in range(len(self.checkersBoard[0])):
+                
                 # variable to make checkboard look
                 offset = 1
 
                 # even rows 0-8
-                if rows % 2 == 0:
+                if (rows % 2 == 0):
                     offset = 0
 
-                #if the column is 1,3,5,7 and row is 0,2,4,6,8
-                #make the box brown
+                # if the column is 1,3,5,7 and row is 0,2,4,6,8,
+                # make the square brown
 
-                #for brown squares
+                # for brown squares
                 if ((col + offset) % 2 == 0):
                     if (self.checkersBoard[rows][col] == "BS"):
-                        # make a canvas(brown bg), place a black checker img in the canvas if it corresponds with the 2d list
+                        # make a canvas (brown bg) and place a black checker img in the canvas if it corresponds with the 2d list
                         self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#451d1d")
                         self.box.image = self.bsimg
                         self.box.create_image(50, 50, anchor=CENTER, image=self.bsimg)
                         self.box.grid(row=rows, column=col)
                     elif (self.checkersBoard[rows][col] == "RS"):
-                        #make a canvas(brown bg), place a red checker img in the canvas if it corresponds with the 2d list
+                        # make a canvas (brown bg) and place a red checker img in the canvas if it corresponds with the 2d list
                         self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#451d1d")
                         self.box.image = self.rsimg
                         self.box.create_image(50, 50, anchor=CENTER, image=self.rsimg)
                         self.box.grid(row=rows, column=col)
                     elif (self.checkersBoard[rows][col] == "BK"):
-                        #make a canvas(brown bg), place a red checker img in the canvas if it corresponds with the 2d list
+                        # make a canvas (brown bg) and place a red checker img in the canvas if it corresponds with the 2d list
                         self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#451d1d")
                         self.box.image = self.bkimg
                         self.box.create_image(50, 50, anchor=CENTER, image=self.bkimg)
                         self.box.grid(row=rows, column=col)
                     elif (self.checkersBoard[rows][col] == "RK"):
-                        #make a canvas(brown bg), place a red checker img in the canvas if it corresponds with the 2d list
+                        # make a canvas (brown bg) and place a red checker img in the canvas if it corresponds with the 2d list
                         self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#451d1d")
                         self.box.image = self.rkimg
                         self.box.create_image(50, 50, anchor=CENTER, image=self.rkimg)
@@ -116,34 +119,33 @@ class Board(Frame):
                         self.box = Canvas(self, height=100, width=100,highlightthickness=0, background="#451d1d")
                         self.box.grid(row=rows, column=col)
 
-                #for tan squares although the checkers will never actually land on them....
+                # for tan, unoccupied squares on the board
                 else:
                     self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#a47c48")
                     self.box.grid(row=rows, column=col)
-                    #packing was removed so that we can add the selected board before packing later
 
-
-    def selectPiece(self, selected=False):
-        #setting up the board without packing it so that we can replace the selected box
+    # class method for selecting pieces on the board
+    def selectPiece(self, selected = False):
+        # sets board up without packing it
         self.setupBoard()
 
         if (self.row %2==0 and self.column %2!=0):
-            #where rows are even and columns are odd
-            #create tan canvas
+            # where rows are even and columns are odd,
+            # create tan canvas
             currentbg = "#c1a071"
         elif(self.row %2!=0 and self.column %2==0):
-            #where rows are odd and columns are even
-            #create tan canvas
+            # where rows are odd and columns are even,
+            # create tan canvas
             currentbg = "#c1a071"
         else:
-            #every other block
-            #create brown canvas
+            # everywhere else,
+            # create brown canvas
             currentbg = "#bb5d5d"
 
-        #set a new variable to the piece at current index
+        # instantiates a variable storing the piece stored at location (self.row, self.column) on board
         piece = self.checkersBoard[self.row][self.column]
 
-        #image variable set to corresponding image for the piece in the 2d list
+        # image variable set to image corresponding to piece (above)
         if (piece == "BS"):
             image = self.bsimg
         elif(piece == "BK"):
@@ -155,42 +157,42 @@ class Board(Frame):
         else:
             image = None
 
-        #replace the box
+        # replace the square
         self.box = Canvas(self, height=100, width=100, highlightthickness=0, background=currentbg)
         if(image != None):
             self.box.image = image
             self.box.create_image(50, 50, anchor=CENTER, image=image)
         self.box.grid(row=self.row,column=self.column)
         self.pack()
-        #if enter is pressed, variable self.selected will be set to the current coordinate
+        
+        # if enter is pressed, variable self.selected will be set to the current coordinates of selected piece
         if (selected==True):
             
             self.selected = (self.row,self.column)
             
-            #printing the coordinates
+            # prints coordinates in console for debugging
             print(self.selected)
 
-            #printing what is in the 2D list at that coordinate!! (we can later use self.selected for movement algorithms!)
+            # prints what is in the 2d list at that coordinate (we can later use self.selected for movement algorithms!)
             print(self.checkersBoard[self.row][self.column])
             return self.row, self.column
 
     # updates and displays board after every move
     def calculateNextMove(self, rowy, coly, pieceType):
-        # checks piece type
-        if (pieceType == "BS"):
-            if (rowy == 7):
-                self.checkersBoard[rowy][coly], self.checkersBoard[self.pieceRow][self.pieceCol] = "BK", self.checkersBoard[rowy][coly]
-        elif (pieceType == "RS"):
-            if (rowy == 0):
-                self.checkersBoard[rowy][coly], self.checkersBoard[self.pieceRow][self.pieceCol] = "RK", self.checkersBoard[rowy][coly]
-        else:
-            self.checkersBoard[rowy][coly], self.checkersBoard[self.pieceRow][self.pieceCol] = self.checkersBoard[self.pieceRow][self.pieceCol], self.checkersBoard[rowy][coly]
-        # makes piece a double if it reaches opposite side of board
-        self.setupBoard()
+        # maintain the original board
+        nextBoard = copy.deepcopy(board)
+        for row in range(len(board)):
+            for col in range(len(board[0])):
+        # ********************SOME CODE THAT UPDATES COPY OF BOARD
+        # TO THE BOARD WITH THE UPDATED MOVE OF PLAYER 1 OR 2********************
+                return nextBoard
 
 class Player():
+    # class variables
+    
     # constructor
     def __init__(self, number, pieceCount=12):
+        # instance variables
         self.number = number
         self.pieceCount = pieceCount
 
@@ -212,7 +214,7 @@ class Player():
     # mutator for pieceCount
     @pieceCount.setter  # says that a mutator/setter follows
     def pieceCount(self, pieceCount):
-        if (pieceCount > 0):
+        if (pieceCount > 0): # range checking
             self._pieceCount = pieceCount
 
     # whenever a player loses a piece,
@@ -220,39 +222,47 @@ class Player():
     def decrementPieceCount(self):
         self._pieceCount -= 1
 
+##################################
 # movement via keys/GPIO input
+##################################
+# function for handling input of right arrow key
 def right(event):
     print("right key pressed")
     b1.column+=1
     print(b1.column)
     b1.selectPiece()
 
+# function for handling input of left arrow key
 def left(event):
     print("left key pressed")
     b1.column-=1
     print(b1.column)
     b1.selectPiece()
 
+# function for handling input of up arrow key
 def up(event):
     print("up key pressed")
     b1.row-=1
     print(b1.row)
     b1.selectPiece()
 
+# function for handling input of down arrow key
 def down(event):
     print("down key pressed")
     b1.row+=1
     print(b1.row)
     b1.selectPiece()
 
-# select current piece and store its position
+# function for handling input of return/enter key
+# selects current piece and stores its position
 def enter(event):
     print("enter key pressed")
     b1.pieceRow, b1.pieceCol = b1.selectPiece(True)
 
-# select new position for the piece
-# only move piece if the space is unoccupied and on red square
-# needs range checking
+# function for handling input of space key
+# selects new position for the piece selected by return/enter key
+# only moves piece if the space is unoccupied and on red square
+# includes range checking and allows pieces to be captured/doubled
 def space(event):
     print("space key pressed")
     # new location of piece
