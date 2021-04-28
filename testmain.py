@@ -5,6 +5,7 @@
 # imports
 from tkinter import *
 import copy
+import sys
 
 # create tkinter object/window
 window = Tk()
@@ -44,10 +45,6 @@ class Board(Frame):
         self.row = 0
         self.column = 0
         self.selected = (None, None)
-        # functions to be run at the beginnning of instantiation
-        self.setupBoard()
-        self.pack()
-        self.selectPiece()
 
     # accessor for row
     @property # says that an accessor/a getter follows
@@ -133,10 +130,12 @@ class Board(Frame):
             # where rows are even and columns are odd,
             # create tan canvas
             currentbg = "#c1a071"
+            
         elif(self.row %2!=0 and self.column %2==0):
             # where rows are odd and columns are even,
             # create tan canvas
             currentbg = "#c1a071"
+            
         else:
             # everywhere else,
             # create brown canvas
@@ -189,6 +188,9 @@ class Board(Frame):
 
 class Player():
     # class variables
+    # when playerTurn == 0, player 1's turn
+    # when playerTurn == 1, player 2's turn
+    playerTurn = 0
     
     # constructor
     def __init__(self, number, pieceCount=12):
@@ -220,35 +222,38 @@ class Player():
     # whenever a player loses a piece,
     # decrement counter for pieces
     def decrementPieceCount(self):
-        self._pieceCount -= 1
+        if (self.pieceCount-1 > 0):
+            self.pieceCount -= 1
+        else:
+            quit()
+            
+# create players 1 and 2
+p1 = Player(0)
+p2 = Player(1)
 
 ##################################
 # movement via keys/GPIO input
 ##################################
 # function for handling input of right arrow key
 def right(event):
-    print("right key pressed")
     b1.column+=1
     print(b1.column)
     b1.selectPiece()
 
 # function for handling input of left arrow key
 def left(event):
-    print("left key pressed")
     b1.column-=1
     print(b1.column)
     b1.selectPiece()
 
 # function for handling input of up arrow key
 def up(event):
-    print("up key pressed")
     b1.row-=1
     print(b1.row)
     b1.selectPiece()
 
 # function for handling input of down arrow key
 def down(event):
-    print("down key pressed")
     b1.row+=1
     print(b1.row)
     b1.selectPiece()
@@ -256,7 +261,6 @@ def down(event):
 # function for handling input of return/enter key
 # selects current piece and stores its position
 def enter(event):
-    print("enter key pressed")
     b1.pieceRow, b1.pieceCol = b1.selectPiece(True)
 
 # function for handling input of space key
@@ -264,172 +268,249 @@ def enter(event):
 # only moves piece if the space is unoccupied and on red square
 # includes range checking and allows pieces to be captured/doubled
 def space(event):
-    print("space key pressed")
     # new location of piece
     rowy, coly = b1.selectPiece(True)
+    
     # check if space is unoccupied
     if (b1.checkersBoard[rowy][coly] == " "):
+        
         # variable to make checkboard look
         offset = 1
+        
         # even rows 0-8
         if rowy % 2 == 0:
             offset = 0
+            
         # check if red square
         if ((coly + offset) % 2 == 0):
-            # if the original piece is a black single
-            if (b1.checkersBoard[b1.pieceRow][b1.pieceCol] == "BS"):
-                # if row of new position is one below that of current one
-                # and col of new position is to the left or right of current one
-                if (((b1.pieceRow + 1) == rowy) and (((b1.pieceCol - 1) == coly) or ((b1.pieceCol + 1) == coly))):
-                    # makes piece a double if it reaches opposite side of board
-                    if (rowy == 7):
-                        b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = "BK", b1.checkersBoard[rowy][coly]
-                    else:
-                        b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
-                    b1.setupBoard()   
-                # capturing piece down 2 and to the right 2
-                elif (((b1.pieceRow + 2) == rowy) and (((b1.pieceCol + 2) == coly))):
-                    # if space between is occupied
-                    if (b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol + 1] == "RS" or "RK"):
-                        b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol + 1] = " "
+
+            # if player 1's turn
+            if (Player.playerTurn == 0):
+                
+                # if the original piece is a black single
+                if (b1.checkersBoard[b1.pieceRow][b1.pieceCol] == "BS"):
+                    
+                    # if row of new position is one below that of current one
+                    # and col of new position is to the left or right of current one
+                    if (((b1.pieceRow + 1) == rowy) and (((b1.pieceCol - 1) == coly) or ((b1.pieceCol + 1) == coly))):
+                        
+                        # makes piece a double if it reaches opposite side of board
+                        if (rowy == 7):
+                            b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = "BK", b1.checkersBoard[rowy][coly]
+                            
+                        else:
+                            b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
+                        b1.setupBoard()
+                        Player.playerTurn += 1
+                        
+                    # capturing piece down 2 and to the right 2
+                    elif (((b1.pieceRow + 2) == rowy) and (((b1.pieceCol + 2) == coly))):
+                        
+                        # if space between is occupied
+                        if (b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol + 1] == "RS" or "RK"):
+                            b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol + 1] = " "
+                            b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
+                            b1.setupBoard()
+                            p2.decrementPieceCount()
+                            
+                        # if space between is unoccupied   
+                        else:
+                            return
+                        
+                    # capturing piece down 2 and to the left 2
+                    elif (((b1.pieceRow + 2) == rowy) and (((b1.pieceCol - 2) == coly))):
+                        
+                        # if space between is occupied
+                        if (b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol - 1] == "RS" or "RK"):
+                            b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol - 1] = " "
+                            b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
+                            b1.setupBoard()
+                            p2.decrementPieceCount()
+                            
+                        # if space between is unoccupied
+                        else:
+                            return
+                        
+                elif (b1.checkersBoard[b1.pieceRow][b1.pieceCol] == "BK"):
+                    
+                    # if row of new position is one below or above that of current one
+                    # and col of new position is to the left or right of current one
+                    if (((b1.pieceRow - 1) == rowy) or ((b1.pieceRow + 1) == rowy) and (((b1.pieceCol - 1) == coly) or ((b1.pieceCol + 1) == coly))):
                         b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
                         b1.setupBoard()
-                    # if space between is unoccupied   
-                    else:
-                        return
-                # capturing piece down 2 and to the left 2
-                elif (((b1.pieceRow + 2) == rowy) and (((b1.pieceCol - 2) == coly))):
-                    # if space between is occupied
-                    if (b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol - 1] == "RS" or "RK"):
-                        b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol - 1] = " "
+                        Player.playerTurn += 1
+                        
+                    # capturing piece down 2 and to the right 2
+                    elif (((b1.pieceRow + 2) == rowy) and (((b1.pieceCol + 2) == coly))):
+                        
+                        # if space between is occupied
+                        if (b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol + 1] == "RS" or "RK"):
+                            b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol + 1] = " "
+                            b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
+                            b1.setupBoard()
+                            p2.decrementPieceCount()
+                            
+                        # if space between is unoccupied   
+                        else:
+                            return
+
+                    # capturing piece down 2 and to the left 2
+                    elif (((b1.pieceRow + 2) == rowy) and (((b1.pieceCol - 2) == coly))):
+
+                        # if space between is occupied
+                        if (b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol - 1] == "RS" or "RK"):
+                            b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol - 1] = " "
+                            b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
+                            b1.setupBoard()
+                            p2.decrementPieceCount()
+
+                        # if space between is unoccupied
+                        else:
+                            return
+
+                    # capturing piece up 2 and to the right 2
+                    elif (((b1.pieceRow - 2) == rowy) and (((b1.pieceCol + 2) == coly))):
+                        
+                        # if space between is occupied
+                        if (b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol + 1] == "RS" or "RK"):
+                            b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol + 1] = " "
+                            b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
+                            b1.setupBoard()
+                            p2.decrementPieceCount()
+
+                        # if space between is unoccupied   
+                        else:
+                            return
+
+                    # capturing piece up 2 and to the left 2
+                    elif (((b1.pieceRow - 2) == rowy) and (((b1.pieceCol - 2) == coly))):
+                        
+                        # if space between is occupied
+                        if (b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol - 1] == "RS" or "RK"):
+                            b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol - 1] = " "
+                            b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
+                            b1.setupBoard()
+                            p2.decrementPieceCount()
+    
+                        # if space between is unoccupied
+                        else:
+                            return
+                else:
+                    pass
+
+            # if player 2's turn
+            if (Player.playerTurn == 1):
+                
+                # if the original piece is a red single
+                if (b1.checkersBoard[b1.pieceRow][b1.pieceCol] == "RS"):
+                    
+                    # if row of new position is one above that of current one
+                    # and col of new position is to the left or right of current one
+                    if (((b1.pieceRow - 1) == rowy) and (((b1.pieceCol - 1) == coly) or ((b1.pieceCol + 1) == coly))):
+
+                        # makes piece a double if it reaches opposite side of board
+                        if (rowy == 0):
+                            b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = "RK", b1.checkersBoard[rowy][coly]
+
+                        else:
+                            b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
+                        b1.setupBoard()
+                        Player.playerTurn -= 1
+
+                    # capturing piece up 2 and to the right 2
+                    elif (((b1.pieceRow - 2) == rowy) and (((b1.pieceCol + 2) == coly))):
+                        
+                        # if space between is occupied
+                        if (b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol + 1] == "BS" or "BK"):
+                            b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol + 1] = " "
+                            b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
+                            b1.setupBoard()
+                            p1.decrementPieceCount()
+            
+                        # if space between is unoccupied   
+                        else:
+                            return
+                        
+                    # capturing piece up 2 and to the left 2
+                    elif (((b1.pieceRow - 2) == rowy) and (((b1.pieceCol - 2) == coly))):
+
+                        # if space between is occupied
+                        if (b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol - 1] == "BS" or "BK"):
+                            b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol - 1] = " "
+                            b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
+                            b1.setupBoard()
+                            p1.decrementPieceCount()
+                            
+                        # if space between is unoccupied
+                        else:
+                            return
+                
+                elif (b1.checkersBoard[b1.pieceRow][b1.pieceCol] == "RK"):
+                    
+                    # if row of new position is one below or above that of current one
+                    # and col of new position is to the left or right of current one
+                    if (((b1.pieceRow - 1) == rowy) or ((b1.pieceRow + 1) == rowy) and (((b1.pieceCol - 1) == coly) or ((b1.pieceCol + 1) == coly))):
                         b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
                         b1.setupBoard()
-                    # if space between is unoccupied
-                    else:
-                        return
-            elif (b1.checkersBoard[b1.pieceRow][b1.pieceCol] == "BK"):
-                # if row of new position is one below or above that of current one
-                # and col of new position is to the left or right of current one
-                if (((b1.pieceRow - 1) == rowy) or ((b1.pieceRow + 1) == rowy) and (((b1.pieceCol - 1) == coly) or ((b1.pieceCol + 1) == coly))):
-                    b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
-                    b1.setupBoard()
-                # capturing piece down 2 and to the right 2
-                elif (((b1.pieceRow + 2) == rowy) and (((b1.pieceCol + 2) == coly))):
-                    # if space between is occupied
-                    if (b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol + 1] == "RS" or "RK"):
-                        b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol + 1] = " "
-                        b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
-                        b1.setupBoard()
-                    # if space between is unoccupied   
-                    else:
-                        return
-                # capturing piece down 2 and to the left 2
-                elif (((b1.pieceRow + 2) == rowy) and (((b1.pieceCol - 2) == coly))):
-                    # if space between is occupied
-                    if (b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol - 1] == "RS" or "RK"):
-                        b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol - 1] = " "
-                        b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
-                        b1.setupBoard()
-                    # if space between is unoccupied
-                    else:
-                        return
-                # capturing piece up 2 and to the right 2
-                elif (((b1.pieceRow - 2) == rowy) and (((b1.pieceCol + 2) == coly))):
-                    # if space between is occupied
-                    if (b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol + 1] == "RS" or "RK"):
-                        b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol + 1] = " "
-                        b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
-                        b1.setupBoard()
-                    # if space between is unoccupied   
-                    else:
-                        return
-                # capturing piece up 2 and to the left 2
-                elif (((b1.pieceRow - 2) == rowy) and (((b1.pieceCol - 2) == coly))):
-                    # if space between is occupied
-                    if (b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol - 1] == "RS" or "RK"):
-                        b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol - 1] = " "
-                        b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
-                        b1.setupBoard()
-                    # if space between is unoccupied
-                    else:
-                        return
-            # if the original piece is a red single
-            elif (b1.checkersBoard[b1.pieceRow][b1.pieceCol] == "RS"):
-                # if row of new position is one above that of current one
-                # and col of new position is to the left or right of current one
-                if (((b1.pieceRow - 1) == rowy) and (((b1.pieceCol - 1) == coly) or ((b1.pieceCol + 1) == coly))):
-                    # makes piece a double if it reaches opposite side of board
-                    if (rowy == 0):
-                        b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = "RK", b1.checkersBoard[rowy][coly]
-                    else:
-                        b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
-                    b1.setupBoard()
-                # capturing piece up 2 and to the right 2
-                elif (((b1.pieceRow - 2) == rowy) and (((b1.pieceCol + 2) == coly))):
-                    # if space between is occupied
-                    if (b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol + 1] == "BS" or "BK"):
-                        b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol + 1] = " "
-                        b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
-                        b1.setupBoard()
-                    # if space between is unoccupied   
-                    else:
-                        return
-                # capturing piece up 2 and to the left 2
-                elif (((b1.pieceRow - 2) == rowy) and (((b1.pieceCol - 2) == coly))):
-                    # if space between is occupied
-                    if (b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol - 1] == "BS" or "BK"):
-                        b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol - 1] = " "
-                        b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
-                        b1.setupBoard()
-                    # if space between is unoccupied
-                    else:
-                        return
-            elif (b1.checkersBoard[b1.pieceRow][b1.pieceCol] == "RK"):
-                # if row of new position is one below or above that of current one
-                # and col of new position is to the left or right of current one
-                if (((b1.pieceRow - 1) == rowy) or ((b1.pieceRow + 1) == rowy) and (((b1.pieceCol - 1) == coly) or ((b1.pieceCol + 1) == coly))):
-                    b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
-                    b1.setupBoard()
-                # capturing piece down 2 and to the right 2
-                elif (((b1.pieceRow + 2) == rowy) and (((b1.pieceCol + 2) == coly))):
-                    # if space between is occupied
-                    if (b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol + 1] == "BS" or "BK"):
-                        b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol + 1] = " "
-                        b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
-                        b1.setupBoard()
-                    # if space between is unoccupied   
-                    else:
-                        return
-                # capturing piece down 2 and to the left 2
-                elif (((b1.pieceRow + 2) == rowy) and (((b1.pieceCol - 2) == coly))):
-                    # if space between is occupied
-                    if (b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol - 1] == "BS" or "BK"):
-                        b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol - 1] = " "
-                        b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
-                        b1.setupBoard()
-                    # if space between is unoccupied
-                    else:
-                        return
-                # capturing piece up 2 and to the right 2
-                elif (((b1.pieceRow - 2) == rowy) and (((b1.pieceCol + 2) == coly))):
-                    # if space between is occupied
-                    if (b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol + 1] == "BS" or "BK"):
-                        b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol + 1] = " "
-                        b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
-                        b1.setupBoard()
-                    # if space between is unoccupied   
-                    else:
-                        return
-                # capturing piece up 2 and to the left 2
-                elif (((b1.pieceRow - 2) == rowy) and (((b1.pieceCol - 2) == coly))):
-                    # if space between is occupied
-                    if (b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol - 1] == "BS" or "BK"):
-                        b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol - 1] = " "
-                        b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
-                        b1.setupBoard()
-                    # if space between is unoccupied
-                    else:
-                        return
+                        Player.playerTurn -= 1
+                    # capturing piece down 2 and to the right 2
+                    
+                    elif (((b1.pieceRow + 2) == rowy) and (((b1.pieceCol + 2) == coly))):
+                        
+                        # if space between is occupied
+                        if (b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol + 1] == "BS" or "BK"):
+                            b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol + 1] = " "
+                            b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
+                            b1.setupBoard()
+                            p1.decrementPieceCount()
+                            
+                        # if space between is unoccupied   
+                        else:
+                            return
+                        
+                    # capturing piece down 2 and to the left 2
+                    elif (((b1.pieceRow + 2) == rowy) and (((b1.pieceCol - 2) == coly))):
+                        
+                        # if space between is occupied
+                        if (b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol - 1] == "BS" or "BK"):
+                            b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol - 1] = " "
+                            b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
+                            b1.setupBoard()
+                            p1.decrementPieceCount()
+            
+                        # if space between is unoccupied
+                        else:
+                            return
+        
+                    # capturing piece up 2 and to the right 2
+                    elif (((b1.pieceRow - 2) == rowy) and (((b1.pieceCol + 2) == coly))):
+            
+                        # if space between is occupied
+                        if (b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol + 1] == "BS" or "BK"):
+                            b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol + 1] = " "
+                            b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
+                            b1.setupBoard()
+                            p1.decrementPieceCount()
+                            
+                        # if space between is unoccupied   
+                        else:
+                            return
+                
+                    # capturing piece up 2 and to the left 2
+                    elif (((b1.pieceRow - 2) == rowy) and (((b1.pieceCol - 2) == coly))):
+                        
+                        # if space between is occupied
+                        if (b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol - 1] == "BS" or "BK"):
+                            b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol - 1] = " "
+                            b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
+                            b1.setupBoard()
+                            p1.decrementPieceCount()
+                            
+                        # if space between is unoccupied
+                        else:
+                            return
+                else:
+                    pass
     else:
         print("Dumbass")
 
@@ -453,10 +534,13 @@ window.title("CHECKERS")
 
 # create an instance of board
 b1 = Board(window)
+n = True
+while (n==True):
+    b1.setupBoard()
+    b1.pack()
+    b1.selectPiece()
+    window.mainloop()
+    n=False
 
 # render the GUI in the mainloop
-window.mainloop()
-
-# create players 1 and 2
-p1 = Player(0)
-p2 = Player(1)
+# window.mainloop()
