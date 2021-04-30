@@ -110,12 +110,12 @@ We need to discuss how we utilized the materials (soldering, laser cutting, and 
 The main program included in this project implements the game Checkers.
 Players of the game may utilize a single joystick and pair of buttons to move pieces around the board and approve or decline their movements.
 This version of the game follows the standard rules of the game, such that:
-1. A player may move single pieces diagonally only one space unless he or she is taking his or her opponent's piece(s), in which case a player may skip several places in one turn.
-2. Other rule
-3. Other rule
-4. Other rule
+1. Black moves first. Players then alternate moves. 
+2. Moves are allowed only on the dark squares; pieces only move diagonally forward, toward the opponent. However, Kings can also move backwards.  
+3. A piece may only move one square unless it is making a jump.
+4. Etc.
 
-Other information about the rules of the game can be found below:
+Above information adapted from the below source:
    ```sh
    https://winning-moves.com/images/kingmerulesv2.pdf
    ```
