@@ -56,7 +56,7 @@ This section contains information regarding the creation and use of this project
 
 ### Prerequisites
 
-[Hardware necessary for the project]
+<b> Hardware necessary for the project </b>
 1. A square board with dimensions 0.20"x23.88"x23.88"
 2. A Raspberry Pi 3b or other compatible device
 3. A screen capable of displaying output from the Raspberry Pi or other compatible device
@@ -65,7 +65,8 @@ This section contains information regarding the creation and use of this project
 7. Small latches with dimensions [dimensions]
 8. Buttons and a joystick from Amazon or competing retailer
 
-[Software necessary for the project]
+<b> Software necessary for the project </b>
+
 1. The latest version of Python, which can be downloaded below:
   ```sh
   https://www.python.org/ftp/python/3.9.4/python-3.9.4-amd64.exe
@@ -74,8 +75,9 @@ This section contains information regarding the creation and use of this project
    ```sh
    link to download of .dfx file
    ```
-   
-[Total cost for project]
+  
+<b> Total cost for project </b>
+
 EMBED A PICTURE WITH THE RECEIPTS AND TOTAL COST HERE!
 
 ### Installation
