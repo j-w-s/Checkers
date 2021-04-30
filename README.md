@@ -72,9 +72,9 @@ This section contains information regarding the creation and use of this project
   https://www.python.org/ftp/python/3.9.4/python-3.9.4-amd64.exe
   ```
 2. The following .dfx file:
-   ```sh
-   link to download of .dfx file
-   ```
+  ```sh
+  link to download of .dfx file
+  ```
   
 <b> Total cost for project </b>
 
