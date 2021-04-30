@@ -4,8 +4,12 @@
 
 # imports
 from tkinter import *
+import RPi.GPIO as GPIO
+from time import sleep
 import copy
 import sys
+
+GPIO.setwarnings(False)
 
 # create tkinter object/window
 window = Tk()
@@ -27,10 +31,10 @@ class Board(Frame):
     # the letters S and D represent single and double pieces, respectively
     checkersBoard = [["BS", " ", "BS", " ", "BS", " ", "BS", " "],
                      [" ", "BS", " ", "BS", " ", "BS", " ", "BS"],
-                     ["BS", " ", "BK", " ", "BS", " ", "BS", " "],
+                     ["BS", " ", "BS", " ", "BS", " ", "BS", " "],
                      [" ", " ", " ", " ", " ", " ", " ", " "],
                      [" ", " ", " ", " ", " ", " ", " ", " "],
-                     [" ", "RK", " ", "RS", " ", "RS", " ", "RS"],
+                     [" ", "RS", " ", "RS", " ", "RS", " ", "RS"],
                      ["RS", " ", "RS", " ", "RS", " ", "RS", " "],
                      [" ", "RS", " ", "RS", " ", "RS", " ", "RS"]]
     # current row and column of a given piece
@@ -89,36 +93,36 @@ class Board(Frame):
                 if ((col + offset) % 2 == 0):
                     if (self.checkersBoard[rows][col] == "BS"):
                         # make a canvas (brown bg) and place a black checker img in the canvas if it corresponds with the 2d list
-                        self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#451d1d")
+                        self.box = Canvas(self, height=60, width=60, highlightthickness=0, background="#451d1d")
                         self.box.image = self.bsimg
-                        self.box.create_image(50, 50, anchor=CENTER, image=self.bsimg)
+                        self.box.create_image(25, 25, anchor=CENTER, image=self.bsimg)
                         self.box.grid(row=rows, column=col)
                     elif (self.checkersBoard[rows][col] == "RS"):
                         # make a canvas (brown bg) and place a red checker img in the canvas if it corresponds with the 2d list
-                        self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#451d1d")
+                        self.box = Canvas(self, height=60, width=60, highlightthickness=0, background="#451d1d")
                         self.box.image = self.rsimg
-                        self.box.create_image(50, 50, anchor=CENTER, image=self.rsimg)
+                        self.box.create_image(25, 25, anchor=CENTER, image=self.rsimg)
                         self.box.grid(row=rows, column=col)
                     elif (self.checkersBoard[rows][col] == "BK"):
                         # make a canvas (brown bg) and place a red checker img in the canvas if it corresponds with the 2d list
-                        self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#451d1d")
+                        self.box = Canvas(self, height=60, width=60,highlightthickness=0, background="#451d1d")
                         self.box.image = self.bkimg
-                        self.box.create_image(50, 50, anchor=CENTER, image=self.bkimg)
+                        self.box.create_image(25, 25, anchor=CENTER, image=self.bkimg)
                         self.box.grid(row=rows, column=col)
                     elif (self.checkersBoard[rows][col] == "RK"):
                         # make a canvas (brown bg) and place a red checker img in the canvas if it corresponds with the 2d list
-                        self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#451d1d")
+                        self.box = Canvas(self, height=60, width=60, highlightthickness=0, background="#451d1d")
                         self.box.image = self.rkimg
-                        self.box.create_image(50, 50, anchor=CENTER, image=self.rkimg)
+                        self.box.create_image(25, 25, anchor=CENTER, image=self.rkimg)
                         self.box.grid(row=rows, column=col)
                     else:
                         # make a canvas(brown bg), these are empty squares
-                        self.box = Canvas(self, height=100, width=100,highlightthickness=0, background="#451d1d")
+                        self.box = Canvas(self, height=60, width=60,highlightthickness=0, background="#451d1d")
                         self.box.grid(row=rows, column=col)
 
                 # for tan, unoccupied squares on the board
                 else:
-                    self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#a47c48")
+                    self.box = Canvas(self, height=60, width=60, highlightthickness=0, background="#a47c48")
                     self.box.grid(row=rows, column=col)
 
     # class method for selecting pieces on the board
@@ -157,10 +161,10 @@ class Board(Frame):
             image = None
 
         # replace the square
-        self.box = Canvas(self, height=100, width=100, highlightthickness=0, background=currentbg)
+        self.box = Canvas(self, height=50, width=50, highlightthickness=0, background=currentbg)
         if(image != None):
             self.box.image = image
-            self.box.create_image(50, 50, anchor=CENTER, image=image)
+            self.box.create_image(25, 25, anchor=CENTER, image=image)
         self.box.grid(row=self.row,column=self.column)
         self.pack()
         
@@ -234,40 +238,51 @@ p2 = Player(1)
 ##################################
 # movement via keys/GPIO input
 ##################################
+#creates events to bind buttons and joystick to window
+def joystickEvent(window, joystick):
+    window.event_generate('<<joystick{}>>'.format(joystick))
+        
+def button1Event(window,button):
+    window.event_generate('<<button{}>>'.format(button))
+
 # function for handling input of right arrow key
 def right(event):
     b1.column+=1
-    print(b1.column)
+   # print(b1.column)
     b1.selectPiece()
 
 # function for handling input of left arrow key
 def left(event):
     b1.column-=1
-    print(b1.column)
+   # print(b1.column)
     b1.selectPiece()
 
 # function for handling input of up arrow key
 def up(event):
     b1.row-=1
-    print(b1.row)
+   # print(b1.row)
     b1.selectPiece()
 
 # function for handling input of down arrow key
 def down(event):
     b1.row+=1
-    print(b1.row)
+    #print(b1.row)
     b1.selectPiece()
 
 # function for handling input of return/enter key
 # selects current piece and stores its position
-def enter(event):
+def button1(event):
+    GPIO.output(leds[0],1)
     b1.pieceRow, b1.pieceCol = b1.selectPiece(True)
+    sleep(.1)
+    GPIO.output(leds[0],0)
 
 # function for handling input of space key
 # selects new position for the piece selected by return/enter key
 # only moves piece if the space is unoccupied and on red square
 # includes range checking and allows pieces to be captured/doubled
-def space(event):
+def button2(event):
+    GPIO.output(leds[1],1)
     # new location of piece
     rowy, coly = b1.selectPiece(True)
     
@@ -511,25 +526,55 @@ def space(event):
                             return
                 else:
                     pass
+        sleep(.1)
+        GPIO.output(leds[1],0)
     else:
-        print("Dumbass")
+        sleep(.1)
+        GPIO.output(leds[1],0)
+        print("null")
 
 ##################################
 # MAIN
 ##################################
 # dimensions of board for pi screen
-# WIDTH =
-# HEIGHT =
+WIDTH, HEIGHT = window.winfo_screenwidth(), window.winfo_screenheight()
+###################################
 
-# binding the window to the functions for keyboard input above
-window.bind("<Right>",right)
-window.bind("<Left>",left)
-window.bind("<Up>",up)
-window.bind("<Down>",down)
-window.bind("<Return>",enter)
-window.bind("<space>",space)
+#variables for GPIO input/output
+buttons= [6,17]
+leds= [5,16]
+joystick = [18,19,20,21]
+GPIO.setmode(GPIO.BCM)
 
-# window.geometry("{}x{}".format(WIDTH, HEIGHT))
+#setup for joystick
+for i in range(len(joystick)):
+    GPIO.setup(joystick[i], GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
+#adds the event for the bind() function for the joysticks
+GPIO.add_event_detect(joystick[0], GPIO.BOTH, callback=lambda x:joystickEvent(window,joystick[0]),bouncetime=800)
+GPIO.add_event_detect(joystick[1], GPIO.BOTH, callback=lambda x:joystickEvent(window,joystick[1]),bouncetime=800)
+GPIO.add_event_detect(joystick[2], GPIO.BOTH, callback=lambda x:joystickEvent(window,joystick[2]),bouncetime=800)
+GPIO.add_event_detect(joystick[3], GPIO.BOTH, callback=lambda x:joystickEvent(window,joystick[3]),bouncetime=800)
+
+#setup for buttons and their leds
+for i in range(len(buttons)):
+    GPIO.setup(buttons[i],GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.setup(leds[i],GPIO.OUT)
+
+#adds event for the bind() funciton for the buttons
+GPIO.add_event_detect(buttons[0], GPIO.FALLING, callback= lambda x:button1Event(window,buttons[0]),bouncetime=800)
+GPIO.add_event_detect(buttons[1], GPIO.FALLING, callback= lambda x:button1Event(window,buttons[1]),bouncetime=800)
+
+#binding joysticks and buttons to probper functions
+window.bind("<<joystick18>>",down)
+window.bind("<<joystick19>>",up)
+window.bind("<<joystick20>>",left)
+window.bind("<<joystick21>>",right)
+window.bind("<<button6>>",button1)
+window.bind("<<button17>>",button2)
+
+
+window.geometry("%dx%d+0+0"%(WIDTH,HEIGHT))
 window.title("CHECKERS")
 
 # create an instance of board
