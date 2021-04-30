@@ -52,7 +52,7 @@ This project ecnompasses the implementation of the game Checkers using the Pytho
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This section contains information regarding the creation and use of this project: how we built the enclosure, how we soldered the wires for compatability with the breadboard, the total expenditure of resources for the materials of the project, the installation of this software, and more.
+This section contains information regarding the creation and use of this project: how we built the enclosure, how we synthesized compatability with the breadboard, the total expenditure of monetary resources for the materials of the project, the installation of this software, and more.
 
 ### Prerequisites
 
@@ -60,7 +60,6 @@ This section contains information regarding the creation and use of this project
 1. A square board with dimensions 0.20"x23.88"x23.88"
 2. A Raspberry Pi 3b or other compatible device
 3. A screen capable of displaying output from the Raspberry Pi or other compatible device
-4. A soldering kit
 5. A screwdriver kit
 6. Access to a laser cutter that can read .dfx files
 7. Small latches with dimensions [dimensions]
@@ -95,10 +94,13 @@ We need to discuss how we utilized the materials (soldering, laser cutting, and 
 ### Building
 
 1. Load the .dfx file to a machine that can laser-cut the design for the enclosure of the Raspberry Pi 3b
-2. Assemble cut pieces of the enclosure
-3. Other step for building
-4. Other step for building
-5. Other step for building
+2. Cut the wooden planks
+3. Stain cut pieces and let dry
+4. Assemble cut pieces for the enclosure
+5. Use a screwdriver to create a hole in the bottom-left corner of the back of the enclosure
+6. etc.
+7. etc.
+8. etc.
 
 <!-- FEATURES -->
 ## Features
