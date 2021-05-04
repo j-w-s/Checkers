@@ -47,7 +47,7 @@
 <!-- ABOUT PROJECT -->
 ## About Project
 
-This project ecnompasses the implementation of the game Checkers using the Python scripting language, the module tkinter, and GPIO input from a breadboard to the Raspberry Pi 3b.
+This project ecnompasses 3 students' implementation of the game Checkers using the Python scripting language, the module tkinter, and GPIO input from a breadboard to the Raspberry Pi 3b.
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -59,9 +59,9 @@ This section contains information regarding the creation and use of this project
 <b> Hardware necessary for the project </b>
 1. A square board with dimensions 0.20"x23.88"x23.88"
 2. A Raspberry Pi 3b or other compatible device
-3. A screen capable of displaying output from the Raspberry Pi or other compatible device
+3. A screen capable of displaying output from the Raspberry Pi 3b or other compatible device
 5. A screwdriver kit
-6. Access to a laser cutter that can read .dfx files
+6. Access to a laser cutter that can read and utilize .dfx files
 7. Small latches with dimensions [dimensions]
 8. Buttons and a joystick from Amazon or competing retailer
 
@@ -73,7 +73,7 @@ This section contains information regarding the creation and use of this project
   ```
 2. The following .dfx file:
   ```sh
-  link to download of .dfx file
+  https://github.com/j-w-s/Checkers/blob/main/Console.dxf
   ```
   
 <b> Total cost for project </b>
@@ -82,15 +82,14 @@ EMBED A PICTURE WITH THE RECEIPTS AND TOTAL COST HERE!
 
 ### Installation
 
-We need to discuss how we utilized the materials (soldering, laser cutting, and more), etc.
 1. Run the previously downloaded executable file for Python 3.X and install Python
 2. Load the command prompt and install tkinter via the following command:
    ```sh
    py -m pip install tkinter
    ```
-3. From the github project, download (FILE WITH EVERYTHING THAT HAS NOT YET BEEN UPLOADED)
+3. From the github project, download the folder titled Checkers
 4. Unzip the downloaded folder to a preferred location
-5. Load IDLE and open the .py file with name "main" stored inside the folder saved at the preferred location mentioned in step 4
+5. Load IDLE and open the .py file with name "checkers.py" stored inside the folder saved at the preferred location mentioned in step 4
 6. Select run
 
 ### Building
@@ -100,9 +99,8 @@ We need to discuss how we utilized the materials (soldering, laser cutting, and 
 3. Stain cut pieces and let dry
 4. Assemble cut pieces for the enclosure
 5. Use a screwdriver to create a hole in the bottom-left corner of the back of the enclosure
-6. etc.
-7. etc.
-8. etc.
+6. Create inserts for the buttons, joystick, and display of the Raspberry Pi 3b or competing device via a saw or nulling machine
+7. Use screws to ground accessories to their designated locations on the enclosure
 
 <!-- FEATURES -->
 ## Features
@@ -115,7 +113,7 @@ This version of the game follows the standard rules of the game, such that:
 3. A piece may only move one square unless it is making a jump.
 4. Etc.
 
-Above information adapted from the below source:
+Above information adapted from the below source, which contains all rules of the game:
    ```sh
    https://winning-moves.com/images/kingmerulesv2.pdf
    ```
