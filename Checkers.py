@@ -79,8 +79,8 @@ class Board(Frame):
     # class method creating visual display of checkers board
     def setupBoard(self):
         # deletes leftover widgets/canvases
-        for widget in Frame.winfo_children(self):
-            widget.destroy()
+        #for widget in Frame.winfo_children(self):
+         #   widget.destroy()
         # loop for rows of checkers board
         for rows in range(len(self.checkersBoard)):
             
@@ -318,7 +318,7 @@ def button1(event):
 # selects new position for the piece selected by return/enter key
 # only moves piece if the space is unoccupied and on red square
 # includes range checking and allows pieces to be captured/doubled
-def space(event):
+def button2(event):
     GPIO.output(leds[1],1)
     # new location of piece
     rowy, coly = b1.selectPiece(True)
@@ -576,8 +576,7 @@ window.bind("<<button17>>",button2)
 window.bind("<Double-Button-1>", quits)
 
 window.attributes("-fullscreen", True)
-# changes geometry of window
-window.geometry("%dx%d+0+0"%(WIDTH,HEIGHT))
+
 
 # changes title of window
 window.title("CHECKERS")
