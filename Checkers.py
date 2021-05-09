@@ -79,8 +79,8 @@ class Board(Frame):
     # class method creating visual display of checkers board
     def setupBoard(self):
         # deletes leftover widgets/canvases
-        #for widget in Frame.winfo_children(self):
-         #   widget.destroy()
+        for widget in Frame.winfo_children(self):
+            widget.destroy()
         # loop for rows of checkers board
         for rows in range(len(self.checkersBoard)):
             
@@ -101,37 +101,44 @@ class Board(Frame):
                 if ((col + offset) % 2 == 0):
                     if (self.checkersBoard[rows][col] == "BS"):
                         # make a canvas (brown bg) and place a black checker img in the canvas
-                        self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#451d1d")
+                        self.box = Canvas(self, height=60, width=60, highlightthickness=0, background="#451d1d")
                         self.box.image = self.bsimg
-                        self.box.create_image(50, 50, anchor=CENTER, image=self.bsimg)
+                        self.box.create_image(30, 30, anchor=CENTER, image=self.bsimg)
                         self.box.grid(row=rows, column=col)
                     elif (self.checkersBoard[rows][col] == "RS"):
                         # make a canvas (brown bg) and place a red checker img in the canvas
-                        self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#451d1d")
+                        self.box = Canvas(self, height=60, width=60, highlightthickness=0, background="#451d1d")
                         self.box.image = self.rsimg
-                        self.box.create_image(50, 50, anchor=CENTER, image=self.rsimg)
+                        self.box.create_image(30, 30, anchor=CENTER, image=self.rsimg)
                         self.box.grid(row=rows, column=col)
                     elif (self.checkersBoard[rows][col] == "BK"):
                         # make a canvas (brown bg) and place a black checker img in the canvas
-                        self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#451d1d")
+                        self.box = Canvas(self, height=60, width=60, highlightthickness=0, background="#451d1d")
                         self.box.image = self.bkimg
-                        self.box.create_image(50, 50, anchor=CENTER, image=self.bkimg)
+                        self.box.create_image(30, 30, anchor=CENTER, image=self.bkimg)
                         self.box.grid(row=rows, column=col)
                     elif (self.checkersBoard[rows][col] == "RK"):
                         # make a canvas (brown bg) and place a red checker img in the canvas
-                        self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#451d1d")
+                        self.box = Canvas(self, height=60, width=60, highlightthickness=0, background="#451d1d")
                         self.box.image = self.rkimg
-                        self.box.create_image(50, 50, anchor=CENTER, image=self.rkimg)
+                        self.box.create_image(30, 30, anchor=CENTER, image=self.rkimg)
                         self.box.grid(row=rows, column=col)
                     else:
                         # make a canvas (brown bg); these are empty squares
-                        self.box = Canvas(self, height=100, width=100,highlightthickness=0, background="#451d1d")
+                        self.box = Canvas(self, height=60, width=60,highlightthickness=0, background="#451d1d")
                         self.box.grid(row=rows, column=col)
 
                 # for tan, unoccupied squares on the board
                 else:
-                    self.box = Canvas(self, height=100, width=100, highlightthickness=0, background="#a47c48")
+                    self.box = Canvas(self, height=60, width=60, highlightthickness=0, background="#a47c48")
                     self.box.grid(row=rows, column=col)
+
+        #adds a black bar at the bottom
+        for i in range(1,6):
+            for j in range(8):
+                self.border = Canvas(self, height=60,width=60,highlightthickness = 0, background="black")
+                self.border.grid(row=rows+i,column=col-j)
+
         self.pack()
 
     # class method that resets the board and restores players' pieces to 12
@@ -180,10 +187,10 @@ class Board(Frame):
             image = None
 
         # replaces the square
-        self.box = Canvas(self, height=100, width=100, highlightthickness=0, background=currentbg)
+        self.box = Canvas(self, height=60, width=60, highlightthickness=0, background=currentbg)
         if (image != None):
             self.box.image = image
-            self.box.create_image(50, 50, anchor=CENTER, image=image)
+            self.box.create_image(30, 30, anchor=CENTER, image=image)
         self.box.grid(row=self.row,column=self.column)
         
         # if enter is pressed, variable self.selected will be set to the current coordinates of selected piece
@@ -285,6 +292,10 @@ def button1Event(window,button):
 #when called quits the window
 def quits(event):
     window.destroy()
+
+#when called resets the board
+def reset(event):
+    b1.resetBoard()
 
 # function for handling input of right joystick
 def right(event):
@@ -393,6 +404,7 @@ def button2(event):
                         
                         # if space between is occupied
                         if (b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol + 1] == "RS" or "RK"):
+                            b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol + 1] = " "
                             capturePieceBlackKing(rowy, coly)
                             
                         # if space between is unoccupied   
@@ -404,6 +416,7 @@ def button2(event):
 
                         # if space between is occupied
                         if (b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol - 1] == "RS" or "RK"):
+                            b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol - 1] = " "
                             capturePieceBlackKing(rowy, coly)
 
                         # if space between is unoccupied
@@ -415,6 +428,7 @@ def button2(event):
                         
                         # if space between is occupied
                         if (b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol + 1] == "RS" or "RK"):
+                            b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol + 1] = " "
                             capturePieceBlackKing(rowy, coly)
 
                         # if space between is unoccupied   
@@ -426,6 +440,7 @@ def button2(event):
                         
                         # if space between is occupied
                         if (b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol - 1] == "RS" or "RK"):
+                            b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol - 1] = " "
                             capturePieceBlackKing(rowy, coly)
     
                         # if space between is unoccupied
@@ -459,7 +474,7 @@ def button2(event):
                         # if space between is occupied
                         if (b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol + 1] == "BS" or "BK"):
                             b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol + 1] = " "
-                            captureRedPieceSingle(rowy, coly)
+                            capturePieceRedSingle(rowy, coly)
             
                         # if space between is unoccupied   
                         else:
@@ -471,7 +486,7 @@ def button2(event):
                         # if space between is occupied
                         if (b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol - 1] == "BS" or "BK"):
                             b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol - 1] = " "
-                            captureRedPieceSingle(rowy, coly)
+                            capturePieceRedSingle(rowy, coly)
                             
                         # if space between is unoccupied
                         else:
@@ -491,6 +506,7 @@ def button2(event):
                         
                         # if space between is occupied
                         if (b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol + 1] == "BS" or "BK"):
+                            b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol + 1] = " "
                             capturePieceRedKing(rowy, coly)
                             
                         # if space between is unoccupied   
@@ -502,6 +518,7 @@ def button2(event):
                         
                         # if space between is occupied
                         if (b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol - 1] == "BS" or "BK"):
+                            b1.checkersBoard[b1.pieceRow + 1][b1.pieceCol - 1] = " "
                             capturePieceRedKing(rowy, coly)
                             
                         # if space between is unoccupied
@@ -513,6 +530,7 @@ def button2(event):
             
                         # if space between is occupied
                         if (b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol + 1] == "BS" or "BK"):
+                            b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol + 1] = " "
                             capturePieceRedKing(rowy, coly)
                             
                         # if space between is unoccupied   
@@ -524,6 +542,7 @@ def button2(event):
                         
                         # if space between is occupied
                         if (b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol - 1] == "BS" or "BK"):
+                            b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol - 1] = " "
                             capturePieceRedKing(rowy, coly)
                             
                         # if space between is unoccupied
@@ -538,7 +557,7 @@ def button2(event):
 # MAIN
 ##################################
 # dimensions of board for pi screen
-WIDTH, HEIGHT = window.winfo_screenwidth(), window.winfo_screenheight()
+#WIDTH, HEIGHT = window.winfo_screenwidth(), window.winfo_screenheight()
 ##################################
 
 #variables for GPIO input/output
@@ -573,10 +592,15 @@ window.bind("<<joystick20>>",right)
 window.bind("<<joystick21>>",left)
 window.bind("<<button6>>",button1)
 window.bind("<<button17>>",button2)
+
+#uses the mouse to reset and quit game if desired
+#can be used to put in buttons at a later date.
 window.bind("<Double-Button-1>", quits)
+window.bind("<Button-1>", reset)
 
 window.attributes("-fullscreen", True)
-
+# changes geometry of window
+#window.geometry("%dx%d+0+0"%(WIDTH,HEIGHT))
 
 # changes title of window
 window.title("CHECKERS")
