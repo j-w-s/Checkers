@@ -291,10 +291,6 @@ def button1Event(window,button):
 def quits(event):
     window.destroy()
 
-#when called resets the board
-def reset(event):
-    b1.resetBoard()
-
 # function for handling input of right joystick
 def right(event):
     b1.column+=1
@@ -591,10 +587,9 @@ window.bind("<<joystick21>>",left)
 window.bind("<<button6>>",button1)
 window.bind("<<button17>>",button2)
 
-#uses the mouse to reset and quit game if desired
+#uses the mouse to quit game if desired
 #can be used to put in buttons at a later date.
 window.bind("<Double-Button-1>", quits)
-window.bind("<Button-1>", reset)
 
 window.attributes("-fullscreen", True)
 # changes geometry of window
