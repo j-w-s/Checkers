@@ -258,7 +258,6 @@ def capturePieceBlackSingle(rowy, coly):
 
 # function for capture piece as a black double
 def capturePieceBlackKing(rowy, coly):
-    b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol - 1] = " "
     b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
     b1.setupBoard()
     p2.decrementPieceCount()
@@ -274,7 +273,6 @@ def capturePieceRedSingle(rowy, coly):
 
 # function for capture piece as a red double
 def capturePieceRedKing(rowy, coly):
-    b1.checkersBoard[b1.pieceRow - 1][b1.pieceCol - 1] = " "
     b1.checkersBoard[rowy][coly], b1.checkersBoard[b1.pieceRow][b1.pieceCol] = b1.checkersBoard[b1.pieceRow][b1.pieceCol], b1.checkersBoard[rowy][coly]
     b1.setupBoard()
     p1.decrementPieceCount()
