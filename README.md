@@ -97,9 +97,9 @@ EMBED A PICTURE WITH THE RECEIPTS AND TOTAL COST HERE!
 1. Load the .dfx file to a machine that can laser-cut the design for the enclosure of the Raspberry Pi 3b
 2. Cut the wooden planks
 3. Stain cut pieces and let dry
-4. Assemble cut pieces for the enclosure
-5. Use a screwdriver to create a hole in the bottom-left corner of the back of the enclosure
-6. Create inserts for the buttons, joystick, and display of the Raspberry Pi 3b or competing device via a saw or nulling machine
+4. Assemble cut pieces for the enclosure and use wood glue to hold pieces together
+5. Drill holes for buttons, joystick, and power cord.
+6. Use a utility knife to cut a hole for the display of the Raspberry Pi 3b or competing device via a saw or nulling machine
 7. Use screws to ground accessories to their designated locations on the enclosure
 
 <!-- FEATURES -->
