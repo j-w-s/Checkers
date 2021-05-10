@@ -61,9 +61,12 @@ This section contains information regarding the creation and use of this project
 2. A Raspberry Pi 3b or other compatible device
 3. A screen capable of displaying output from the Raspberry Pi 3b or other compatible device
 5. A screwdriver kit
-6. Access to a laser cutter that can read and utilize .dfx files
-7. Small latches with dimensions [dimensions]
-8. Buttons and a joystick from Amazon or competing retailer
+6. A utility knife
+7. A drill
+8. Wood Glue
+9. Access to a laser cutter that can read and utilize .dfx files
+10. Small latches with dimensions 1"x1"
+11. Buttons and a joystick from Amazon or competing retailer
 
 <b> Software necessary for the project </b>
 
@@ -97,10 +100,11 @@ EMBED A PICTURE WITH THE RECEIPTS AND TOTAL COST HERE!
 1. Load the .dfx file to a machine that can laser-cut the design for the enclosure of the Raspberry Pi 3b
 2. Cut the wooden planks
 3. Stain cut pieces and let dry
-4. Assemble cut pieces for the enclosure and use wood glue to hold pieces together
-5. Drill holes for buttons, joystick, and power cord.
-6. Use a utility knife to cut a hole for the display of the Raspberry Pi 3b or competing device via a saw or nulling machine
+4. Assemble cut pieces for the enclosure
+5. Drill holes for the buttons, joystick, and power cord
+6. Use a utility knife to cut a hole in the top piece of the enclosure for the display of the Raspberry Pi 3b or competing device
 7. Use screws to ground accessories to their designated locations on the enclosure
+8. Use wood glue to seal pieces together
 
 <!-- FEATURES -->
 ## Features
