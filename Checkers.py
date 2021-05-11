@@ -554,32 +554,32 @@ def button2(event):
 #WIDTH, HEIGHT = window.winfo_screenwidth(), window.winfo_screenheight()
 ##################################
 
-#variables for GPIO input/output
+# variables for GPIO input/output
 buttons= [6,17]
 leds= [5,16]
 joystick = [18,19,20,21]
 GPIO.setmode(GPIO.BCM)
 
-#setup for joystick
+# setup for joystick
 for i in range(len(joystick)):
     GPIO.setup(joystick[i], GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-#adds the event for the bind() function for the joysticks
+# adds the event for the bind() function for the joysticks
 GPIO.add_event_detect(joystick[0], GPIO.BOTH, callback=lambda x:joystickEvent(window,joystick[0]),bouncetime=800)
 GPIO.add_event_detect(joystick[1], GPIO.BOTH, callback=lambda x:joystickEvent(window,joystick[1]),bouncetime=800)
 GPIO.add_event_detect(joystick[2], GPIO.BOTH, callback=lambda x:joystickEvent(window,joystick[2]),bouncetime=800)
 GPIO.add_event_detect(joystick[3], GPIO.BOTH, callback=lambda x:joystickEvent(window,joystick[3]),bouncetime=800)
 
-#setup for buttons and their leds
+# setup for buttons and their leds
 for i in range(len(buttons)):
     GPIO.setup(buttons[i],GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.setup(leds[i],GPIO.OUT)
 
-#adds event for the bind() funciton for the buttons
+# adds event for the bind() funciton for the buttons
 GPIO.add_event_detect(buttons[0], GPIO.FALLING, callback= lambda x:button1Event(window,buttons[0]),bouncetime=800)
 GPIO.add_event_detect(buttons[1], GPIO.FALLING, callback= lambda x:button1Event(window,buttons[1]),bouncetime=800)
 
-#binding joysticks and buttons to probper functions
+# binds joysticks and buttons to probper functions
 window.bind("<<joystick18>>",up)
 window.bind("<<joystick19>>",down)
 window.bind("<<joystick20>>",right)
@@ -587,8 +587,8 @@ window.bind("<<joystick21>>",left)
 window.bind("<<button6>>",button1)
 window.bind("<<button17>>",button2)
 
-#uses the mouse to quit game if desired
-#can be used to put in buttons at a later date.
+# uses the mouse to quit game if desired
+# can be used to put in buttons at a later date.
 window.bind("<Double-Button-1>", quits)
 
 window.attributes("-fullscreen", True)
