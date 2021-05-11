@@ -49,6 +49,15 @@
 
 This project ecnompasses 3 students' implementation of the game Checkers using the Python scripting language, the module tkinter, and GPIO input from a breadboard to the Raspberry Pi 3b.
 
+<p align="center">
+  <a href="https://github.com/j-w-s/CSC-132-Final-Project">
+    <img src="img-readme/project_img.jpg" alt="Logo" width="150" height="200">
+  </a>
+  <br>
+<img src="img-readme/circuit_diagram.png" alt="Logo" width="300" height="225">
+<img src="img-readme/schematic_diagram.png" alt="Logo" width="300" height="225">
+  <br/>
+
 <!-- GETTING STARTED -->
 ## Getting Started
 
