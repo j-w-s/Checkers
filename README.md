@@ -99,7 +99,7 @@ This section contains information regarding the creation and use of this project
    ```sh
    py -m pip install tkinter
    ```
-3. From the github project, download the folder titled Checkers
+3. From the github project, download the .zip file named "Checkers"
 4. Unzip the downloaded folder to a preferred location
 5. Load IDLE and open the .py file with name "checkers.py" stored inside the folder saved at the preferred location mentioned in step 4
 6. Select run
